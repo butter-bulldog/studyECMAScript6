@@ -265,3 +265,142 @@ var p_obj = new Proxy(obj, {
 
 console.log(p_obj.hoge);
 console.log(p_obj.nothing);
+
+/**
+ * マップ
+ */
+let objkey = {};
+let m = new Map();
+m.set('hoge', 'ほげ');
+m.set('foo', 'ふぅ');
+m.set('piyo', 'ぴよ');
+m.set(objkey, 'オブジェクト');
+console.log(m.get('hoge')); // ほげ
+console.log(m.has('hoge')); // true
+
+// マップのキーを列挙
+for (let key of m.keys()) {
+    console.log(key);
+}
+
+// マップの値を列挙
+for (let value of m.values()) {
+    console.log(value);
+}
+
+// マップのキー/値を列挙
+for (let [key, value] of m) {
+    console.log(`${key}:${value}`);
+}
+
+// マップを順番に処理
+m.forEach((value, key) =>
+    console.log(`${key}=${value}`));
+
+// hogeキーを削除
+m.delete('hoge');
+
+// すべてのキーを削除
+m.clear();
+
+
+
+/**
+ * Setオブジェクト
+ * 一意な値の集合を管理するセット
+ */ 
+// セットの生成&値の登録
+let s = new Set();
+s.add(5);
+s.add(10);
+s.add(8);
+s.add(0);
+s.add(0); // 重複した値が追加されたら無視される
+
+console.log(s.size); // 4
+console.log(s.has(5)) // true
+
+s.delete(5);
+
+// セットの値を列挙
+for (let value of s) {
+    console.log(value); // 10, 8, 0
+}
+
+// セットの内容をクリア
+s.clear();
+
+
+/**
+ * オブジェクト指向公文
+ */
+
+// メソッド定義
+let book = {
+    title: 'AngularJSアプリケーション',
+    price: 3700,
+    toString() {
+        console.log(`${this.title}:${this.price}円`);
+    }
+}
+
+book.toString(); // AngularJSアプリケーション:3700円
+
+// プロパティ名の動的生成
+let i = 0;
+let data4 = {
+    ['hoge' + ++i]: 15,
+    ['hoge' + ++i]: 20,
+    ['hoge' + ++i]: 25
+}
+console.log(data4);
+
+// クラスを定義する
+class Person {
+    constructor(name, sex) {
+        this.name = name;
+        this.sex = sex;
+    }
+    show () {
+        return `${this.name}は${this.sex}です`;
+    }
+}
+let p = new Person('ナオ', '女');
+console.log(p.show());
+
+// 匿名クラスも使える
+const Person2 = class {
+    constructor(name, sex) {
+        this.name = name;
+        this.sex = sex;
+    }
+    show () {
+        return `${this.name}は${this.sex}です`;
+    }
+}
+let p2 = new Person2('ミキ', '女');
+console.log(p2.show());
+
+// getter / setterも利用できる
+class Person3 {
+    constructor(name, sex) {
+        this.name = name;
+        this.sex = sex;
+    }
+
+    get age() {
+        return this._age;
+    }
+
+    set age(value) {
+        this._age = value
+    }
+
+    show() {
+        return `${this.name}は${this.sex},${this.age}歳です`;
+    }
+}
+let p3 = new Person('アキ', '女');
+p.age = 10;
+console.log(p3.show());
+
