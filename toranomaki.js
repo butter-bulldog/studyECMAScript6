@@ -188,6 +188,80 @@ let Counter2 = function() {
  * 組み込みオブジェクト
  */
 
+// Promiseオブジェクト(非同期処理)
+
+function hage(value) {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            if (value) {
+                resolve(`値は${value}`);
+            } else {
+                reject('入力値が空です');
+            }
+        }, 2000);
+    })
+}
+
+hage('佐藤').then(
+    response => {
+        console.log(response);
+    },
+    error => {
+        console.log(error);
+    }
+);
+
+hage('').then(
+    response => {
+        console.log(response);
+    },
+    error => {
+        console.log(error);
+    }
+);
 
 
+// 非同期処理を連結する
+hage('佐藤').then(
+    response => {
+        console.log('1. ' + response);
+        // ここで2回目のhageを行う
+        return hage('スズキ');
+    }
+// 2回目hageの結果はここで処理
+).then(
+    response => {
+        console.log('2. ' + response);
+    },
+    error => {
+        console.log('Error.' + error);
+    }
+);
 
+// 複数の非同期処理を並行して実行する
+Promise.all([
+    hage('佐藤'),
+    hage('腰掛'),
+    hage('鈴木花子')
+]).then(
+    response => {
+        // 全てが成功した場合
+        console.log(response); // [ '値は佐藤', '値は腰掛', '値は鈴木花子' ]
+    },
+    error => {
+        // いずれかが失敗した場合はこっちが実行される
+        console.log('Error.' + error);
+    }
+);
+
+// Proxyオブジェクト
+let obj = {hoge: 'ほげ', foo: 'ふー'};
+var p_obj = new Proxy(obj, {
+    get(target, prop) {
+        return prop in target ?
+            target[prop] : '?';
+    }
+});
+
+console.log(p_obj.hoge);
+console.log(p_obj.nothing);
