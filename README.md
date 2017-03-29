@@ -29,3 +29,8 @@ Promiseなどの新しい組み込みオブジェクトを使うにはpolyfill�
 ```
 npm install --save babel-polyfill
 ```
+
+import, exportのサンプル
+```
+babel-node main.js --presets es2015
+```
