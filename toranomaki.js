@@ -404,3 +404,116 @@ let p3 = new Person('アキ', '女');
 p.age = 10;
 console.log(p3.show());
 
+
+// 継承
+class Person4 {
+    constructor(name, sex) {
+        this.name = name;
+        this.sex = sex;
+    }
+    show () {
+        return `${this.name}は${this.sex}です`;
+    }
+}
+
+class BusinessPerson extends Person4 {
+    constructor(name, sex, clazz) {
+        super(name, sex);
+        this.clazz = clazz;
+    }
+    show() {
+        return `${super.show()}役職は${this.clazz}です`;
+    }
+}
+
+let bp = new BusinessPerson('チエ', '女', '主任');
+console.log(bp.show());
+
+
+// イテレーター
+// 組み込み
+let array_data = [1, 2, 3];
+let str_data = 'いろは';
+let map_data = new Map();
+map_data.set('JS', 'JavaScript');
+map_data.set('PL', 'Perl');
+map_data.set('PY', 'Python');
+
+for (let tmp of array_data) {
+    console.log(tmp);
+}
+
+for (let [key, value] of map_data)
+{
+    console.log(`${key}:${value}`);
+}
+
+// イテレーターを実装したクラス
+class MyClazz {
+    // 引数で渡された配列を保持
+    constructor(data) {
+        this.data = data;
+    }
+
+    [Symbol.iterator]() {
+        let current = 0;
+        let that = this;
+        return {
+                next() {
+                    // 最後のデータならdone:trueを、違ってれば現在のデータとdone:falseを
+                    return current < that.data.length ?
+                        {value:that.data[current++], done:false} : {done: true};
+                }
+        }
+    }
+}
+
+let c = new MyClazz(['ほげ', 'ふー', 'ぴよ']);
+for (let d of c) {
+    console.log(d);
+}
+
+
+
+// ジェネレーター
+function* myGenerator() {
+    yield 'あ';
+    yield 'い';
+    yield 'う';
+}
+for (let t of myGenerator()) {
+    console.log(t) // あ　い　う
+}
+
+// カウントダウンするジェネレーター
+function* countdown(begin) {
+    while (begin >= 0) {
+        yield begin--;
+    }
+}
+for (let t of countdown(10)) {
+    console.log(t);
+}
+
+// さきほどのサンプルをジェネレータで書き換え
+class MyClazz2 {
+    constructor(data) {
+        this.data = data;
+        this[Symbol.iterator] = function*() {
+            let current = 0;
+            let that = this;
+            while (current < that.data.length) {
+                yield that.data[current++];
+            }
+        }
+    }
+}
+
+let c2 = new MyClazz2(['ほげ', 'ふー', 'ぴよ']);
+for (let d of c2) {
+    console.log(d);
+}
+
+
+
+
