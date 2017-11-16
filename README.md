@@ -1,4 +1,4 @@
-# ECMAScript6Lesson
+# studyECMAScript6
 
 トランスコンパイラー(babel)の準備
 
