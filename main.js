@@ -7,3 +7,9 @@ console.log(circle(2));
 import * as mymath from './figure';
 console.log(mymath.triangle(10, 5));
 console.log(mymath.circle(2));
+
+// 特定の関数に別名をつける方法
+import {triangle as mytriangle, circle as mycircle} from './figure';
+console.log(mytriangle(10, 5));
+console.log(mycircle(2));
+
