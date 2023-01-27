@@ -182,7 +182,7 @@ console.log(result); // 1, 2
 var numbers = [1, 2, 3];
 // 1回目のsumにはインデックス0の1が入ってくる。nには2が入ってくる
 var result = numbers.reduce((sum, n) => (sum += n));
-console.log(result); // 1, 2
+console.log(result); // 6
 
 // ---------------
 // 配列を結合する
